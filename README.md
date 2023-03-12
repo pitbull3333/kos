@@ -2,7 +2,7 @@ Il faut copier le dossier "KOS" dans "Kerbal Space Program\GameData".
 Il faut copier le contenu du dossier "script" dans "Kerbal Space Program\Ships\Script".
 Il faut copier le contenu du dossier "avions" dans "Kerbal Space Program\saves\votre dossier sauvegarde\Ships\SPH".
 Lancé KSP, charger votre sauvegarde, puis aller dans le bâtiment de construction des avions pour charger l'avion nommé "AVION ORBITAL"
-Aller sur la piste de décollage avec cet avion puis cliquez sur l'icône KOS" qui est apparue dans les icônes de droite.
+Aller sur la piste de décollage avec cet avion puis cliquez sur l'icône "KOS" qui est apparue dans les icônes de droite.
 Ouvrez la console en cliquant sur licone d'ordinateur puis taper les deux commande suivante :
 switch to 0.
 run avion.
