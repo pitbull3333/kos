@@ -9,5 +9,8 @@ run avion.
 Attention ne pas oublier le point.
 L'avion va décoller tout seul pour se mettre en orbite autour de Kerbin à 100 km, puis atterrir tout seul sur la piste d'où il a décollé.
 Vous n'avez rien à faire à part avancer le temps quand la console vous le dira, mais attention pas plus de 4 flèches.
+Pour editer le code je vous consaille Sublime Text.
+Si vous choisisser cette éditeur je vous consaille de maitre le code en couleur pour plus de visibilité.
+Pour cela 
 Pour plus d'information sur le code :
 https://ksp-kos.github.io/KOS/
