@@ -2,8 +2,9 @@
 clearscreen.
 set hauteur_vesseau to ALT:RADAR - 1.57.
 BRAKES off.
-ag1 on.
-ag1 off.
+LIGHTS on.
+SHIP:PARTSTAGGED("mg")[0]:ACTIVATE().
+SHIP:PARTSTAGGED("md")[0]:ACTIVATE().
 set ship:control:mainthrottle to 1.
 // calcul de l'anticipation
 set conteur_temps to -1.
@@ -79,17 +80,20 @@ UNTIL GROUNDSPEED > 80 {
 	// fin de l'action sur la roue pour que l'avion reviaine dans l'axe de la piste.
 }
 set SHIP:CONTROL:PITCH to 0.
+SET SHIP:CONTROL:WHEELSTEER to 0.
 // fin de garde l'avion au centre de la piste quand il décole
 UNTIL hauteur_vesseau > 5 {
 	lock steering to heading(90,35,0).
 	set hauteur_vesseau to ALT:RADAR - 1.57.
 }
 GEAR off.
+LIGHTS off.
 UNTIL SHIP:ALTITUDE > 17000 {
 	lock steering to heading(90,20,0).
 }
-ag2 on.
-UNTIL SHIP:APOAPSIS >= 100000 {
+SHIP:PARTSTAGGED("mg")[0]:TOGGLEMODE().
+SHIP:PARTSTAGGED("md")[0]:TOGGLEMODE().
+UNTIL SHIP:APOAPSIS >= 100000 {// 200000 pour une orbite de 200000 km
 	if (SHIP:ALTITUDE < 70000) {
 		lock steering to heading(90,20,0).
 	} ELSE if sasmode <> "prograde" {
@@ -112,14 +116,14 @@ set warp to 3.
 WAIT UNTIL ETA:APOAPSIS <= 19.
 set warp to 0.
 set max_acc to ship:maxthrust / ship:mass.// attantion il faut que les réacteur soit activé
-set temp_combustion to (2255 - ship:velocity:orbit:mag) / max_acc.
+set temp_combustion to (2255 - ship:velocity:orbit:mag) / max_acc.// 2095 pour une orbite de 200000 km
 //print "accélération : " + max_acc.
 //print "vitesse orbitale prise en conte : " + ship:velocity:orbit:mag.
 //print "temp de combustion : " + temp_combustion.
 WAIT UNTIL ETA:APOAPSIS <= temp_combustion / 2.
 //print "vitesse orbitale à la combustion : " + ship:velocity:orbit:mag.
 set ship:control:mainthrottle to 1.
-WAIT UNTIL ship:velocity:orbit:mag >= 2255.
+WAIT UNTIL ship:velocity:orbit:mag >= 2255.// 2095 pour une orbite de 200000 km
 set ship:control:mainthrottle to 0.
 sas off.
 //SET SHIP:CONTROL:NEUTRALIZE to TRUE.// vous rend les commendes
@@ -159,6 +163,7 @@ global function fonction_vitesse {
 	}else{
 		set ship:control:mainthrottle to 0.
 		GEAR on.
+		LIGHTS on.
 	}
 }
 // fin de la gestion de la vitesse
@@ -294,6 +299,7 @@ global function fonction_hauteur {
 					}
 				}
 				if(tangage > 5){
+					//print "ok".
 					set SHIP:CONTROL:PITCH to 0.
 				}
 			}else{
@@ -328,7 +334,7 @@ global function fonction_hauteur {
 				//print "VS : " + SHIP:VERTICALSPEED + " PITCH : " + SHIP:CONTROL:PITCH.
 			}
 			if (SHIP:ALTITUDE < 75) {
-				print "tangage : " + tangage + " GROUNDSPEED : " + SHIP:GROUNDSPEED.
+				//print "tangage : " + tangage + " GROUNDSPEED : " + SHIP:GROUNDSPEED.
 			}
 			set conteur_temps_tangage to -1.
 		}
@@ -383,8 +389,8 @@ set warp to 3.
 UNTIL SHIP:ALTITUDE < 17000 {
 	lock steering to heading(90,0,0).
 }
-ag2 on.
-ag2 off.
+SHIP:PARTSTAGGED("mg")[0]:TOGGLEMODE().
+SHIP:PARTSTAGGED("md")[0]:TOGGLEMODE().
 UNTIL SHIP:ALTITUDE < 12000 {
 	lock steering to heading(90,0,0).
 }
@@ -454,10 +460,12 @@ UNTIL SHIP:ALTITUDE < 72 {
 	}
 }
 WAIT 2.
-BRAKES ON.
+BRAKES on.
 UNTIL SHIP:GROUNDSPEED < 2 {
 	lock steering to heading(90,0,0).
 }
+LADDERS on.
+LIGHTS off.
 SET SHIP:CONTROL:NEUTRALIZE to TRUE.// vous rend les commendes
 //-74.69982 band blanche (zone de toucher)
 //-74.72481 position inissiale de l'avion sur la piste.
